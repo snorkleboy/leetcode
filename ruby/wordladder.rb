@@ -27,8 +27,10 @@
 # would do this but from both ends which would apparently get approx 1/2 the time
 
 # there is a word_obj class which has a word and a distence from the start word
-# you find all words in the dictionary that are adjecent to the start word and remove them from the dictionary, and add them to an array with their distence
-# keep doing this until you hit the target word. * since this is BFS first time you hit the target it will be the shortest distence *. 
+# you find all words in the dictionary that are adjecent to the words in the queue(initially the start word) and remove them from the dictionary and add to the queue with distence.
+# keep doing this until you hit the target word or queu is empty(no more adj words).
+#  * since this is BFS first time you hit the target it will be the shortest distence *. 
+
 require 'set'
 
 def ladder_length(start, target, word_list)
