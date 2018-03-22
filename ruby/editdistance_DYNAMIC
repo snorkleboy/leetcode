@@ -1,0 +1,47 @@
+https://leetcode.com/problems/edit-distance/description/
+Given two words word1 and word2, find the minimum number of steps required to convert word1 to word2. (each operation is counted as 1 step.)
+
+You have the following 3 operations permitted on a word:
+
+a) Insert a character
+b) Delete a character
+c) Replace a character
+
+# @param {String} word1
+# @param {String} word2
+# @return {Integer}
+
+
+# the idea behind this solution is to start with the simplest sub problem possible, edit distence of two empty strings. in general find solutions to edit_distance(str1[0..i],str2[0..j]). The idea is that if comapring strings ('ab','cb'), the edit_distance will be the same as whatever you do to handle the last letter, plus the solutions to ('a','c')
+def min_distance(word1, word2)
+    costs = Array.new(word1.length+1){Array.new(word2.length+1)}
+    costs[0][0]=0
+#     base case of word2 being empty, then the number of steps is deleting each char in word 1
+    for i in (0..word1.length)
+        costs[i][0] = i
+    end
+#     base case of word1 being empty, then number of steps is inseting each char of word2 into word1
+    for j in (0..word2.length)
+        costs[0][j] = j
+    end
+    for i in (1..word1.length)
+        for j in (1..word2.length)
+            if ( word1[i-1] == word2[j-1])
+#               no extra steps needed, solution same as if word1[i] and word2[j] were popped off, solution for which is costs[i-1][j-1]
+#                 costs[0][0] = 0 so if both strings are equal this will always hit
+                costs[i][j] = costs[i-1][j-1]
+            else
+#               insert word2[j] into word1[i]
+#                 like '' : 'w'. inserting word2[j] into word1[i] is same as removing word2[j], so tolution will be costs[i][j-1] + 1 for insert
+                insertCost=costs[i][j-1] + 1
+#               word1[i] should be deleted. solution will be same as costs[i-1][j] + 1 for delete
+                deleteCost=costs[i-1][j] + 1
+#               replace, you can then pop the off, so the result is like if word1[i]==word2[j], +1. 
+                replaceCost=costs[i-1][j-1] + 1
+                costs[i][j] = [insertCost,deleteCost,replaceCost].min
+            end
+        end
+    end
+    p costs
+    costs[word1.length][word2.length]
+end
