@@ -1,6 +1,15 @@
 solution 1
 kinda works 50/180
-wrong answers on
+wrong answers on 
+"
+Input:
+[186,419,83,408]
+6249
+Output:
+-1
+Expected:
+20
+"
 # @param {Integer[]} coins
 # @param {Integer} amount
 # @return {Integer}
@@ -61,5 +70,28 @@ def filler(coins,amount,best_change_for_amount)
         
     end
     best_change_for_amount[amount] = best_num
+end
+
+
+
+solution 3
+bottom up dynamic iteration
+accepted 
+def coin_change(coins, amount)
+    return 0 if (amount < 1)
+    purse = coins.min
+    return -1 if (coins.empty? || purse > amount)
+    change = {0=>0}
+    coins.each{|coin| change[coin] = 1}
+    while (purse <= amount)
+        best_curr = false
+        coins.each do |coin|
+            coin_count = change[purse-coin] ? change[purse-coin] + 1 : false
+            best_curr = [coin_count,best_curr].select{|v| v}.min
+        end
+        change[purse] = best_curr ? best_curr : false
+        purse += 1
+    end
+    change[amount] || -1
 end
 
