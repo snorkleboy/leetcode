@@ -95,3 +95,34 @@ def coin_change(coins, amount)
     change[amount] || -1
 end
 
+
+solution 4
+BFS, accepted
+
+
+idea is to think of it as a tree, where amounts are nodes and every node has children in the form of children_of_node = coins.map{|coins 
+def coin_change(coins, amount)
+    return 0 if (amount == 0)
+    return -1 if (coins.empty? || coins.min > amount)
+
+    visited = {}
+    to_visit = [0]
+    steps = 0
+    while (!to_visit.empty?)
+        steps += 1
+        new_to_visit = []
+        to_visit.each do |sub_amount|
+            unless (visited[sub_amount])
+                visited[sub_amount] = true
+                coins.each do |coin|
+                    new_am = sub_amount+coin
+                    return steps if (new_am == amount)
+                    new_to_visit.unshift(new_am) if (new_am <= amount)
+                end
+            end
+        end
+        to_visit = new_to_visit
+    end
+    return -1
+end
+
