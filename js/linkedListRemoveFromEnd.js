@@ -13,14 +13,17 @@
 var removeNthFromEnd = function(head, n) {
     let forwardPtr = head.next
     let backPtr = head
+    if (forwardPtr === null){
+        return null
+    }
     for(let i = 1; i < n ; i++){
         forwardPtr = forwardPtr.next
     }
-    if (forwardPtr === null || forwardPtr.next === null){
-        if (n === 1) return backPtr
-        if (n === 2) return forwardPtr
+    if (forwardPtr === null){
+        return n===1 ? backPtr : backPtr.next
     }
-    console.log(backPtr.val,forwardPtr.val)
+        console.log(backPtr.val,forwardPtr.val)
+
     while (forwardPtr.next !== null){
         forwardPtr = forwardPtr.next
         backPtr = backPtr.next
