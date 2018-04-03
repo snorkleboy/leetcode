@@ -1,0 +1,55 @@
+const foundWords = []
+
+let length = 0;
+let height = 0;
+function boggle(words,dict){
+    length = words.length;
+    height = words[0].length;
+    const visited = [[],[],[]]
+    for(let i = 0;i < length; i++){
+        for( let j = 0; j<height; j++){
+            findWords(words,i,j,dict,"",visited);
+        }
+    }
+}
+
+function findWords(words,i,j,dict,str,visited){
+
+    if ( i < 0 || j < 0 || i >= length || j >= height){
+        return
+    }
+    if (str.slice(0,3) == 'GEE')console.log(i,j,str,visited,visited[i][j])
+    if (visited[i][j]){
+	return
+    }
+
+
+    str += words[i][j] 
+
+    if (dict.has(str)){
+        foundWords.push(str);
+    }
+
+    
+    findWords(words,++i,j,dict,str,nvisited)
+    findWords(words,i,++j,dict,str,nvisited)
+    findWords(words,--i,j,dict,str,nvisited)
+    findWords(words,i,--j,dict,str,nvisited)
+    findWords(words,++i,++j,dict,str,nvisited)
+    findWords(words,--i,++j,dict,str,nvisited)
+    findWords(words,--i,--j,dict,str,nvisited)
+    findWords(words,++i,--j,dict,str,nvisited)
+    nvisited[i][j] = false;
+
+
+}
+
+
+const wrds =[
+['G','I','Z'],
+['U','E','K'],
+['Q','S','E']
+]
+const dictionary = new Set(["GEEKS", "FOR", "QUIZ", "GO"])
+boggle(wrds,dictionary)
+console.log(foundWords)
